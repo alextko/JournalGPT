@@ -1,0 +1,53 @@
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="landing_page.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/landing_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap" rel="stylesheet">
+    
+  
+</head>
+<div class="container">
+    <div class="components">
+
+
+        <div>
+        <div id = "main_title"> <p>JournalGPT</p></div>
+        </div>
+        
+
+        <div class="segmented-control">
+    
+        <input type="radio" name="radio2" value="journal" id="tab-1" checked/>
+        <label for="tab-1" class= "segmented-control__1">
+            <p>Journal</p></label>
+        
+        <input type="radio" name="radio2" value="chat" id="tab-2" />
+        <label for="tab-2" class= "segmented-control__2">
+            <p>Chat</p></label>
+        
+        <div class="segmented-control__color"></div>
+        </div>
+        <div class="form">
+            <textarea type="text" id = "form__input" class="form__input" placeholder="Type anything..."></textarea>
+            <br><br>
+            <div class="btn btn__primary" name = "save_button" id = "save_button"><p>Save</p></div>
+            </div>
+
+            <body>
+                <div id="chat-container" name="chat-container">
+                  <div id="chat-messages"></div>
+                  <div id="chat-form" name="chat-form">
+                    <input type="text" id="message-input" placeholder="Type your message here" />
+                    <br></br>
+                    <div class="btn btn__primary2" name = "send-button" id="send-button" ><p>Send</p></div>
+                  </div>
+                </div>
+
+              </body>
+      
+    </div>
+  </div>

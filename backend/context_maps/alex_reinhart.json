@@ -1,0 +1,26 @@
+{
+    "first_name": "Alex",
+    "last_name": "Reinhart",
+    "location": "Austin Texas",
+    "age": 24,
+    "ethnicity": "hispanic",
+    "Relationships": 
+    {
+        "mother": "doriam",
+        "father": "andrew",
+        "significant other": 
+        {
+            "Name": "Brad",
+            "age": 23
+        }
+
+    },
+    "intrests": 
+    [
+        "skiing",
+        "kiteboaring",
+        "tennis",
+        "weight lifting",
+        "triathalons"
+    ]
+}
