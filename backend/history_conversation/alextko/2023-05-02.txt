@@ -1,0 +1,35 @@
+Bot: I understand that it can be uncomfortable to talk about your mental health with a stranger, but seeking therapy can be a positive step towards improving your overall wellbeing. Can you tell me more about how your low mood has been affecting you and your daily life?
+You: ok fine can you ask me some questions .
+Bot: Of course, I'm here to listen. Have you noticed any changes or disruptions in your sleep or appetite lately?
+You: hey do you know anything about me .
+Bot: Based on the information you shared, it seems like you are a 24-year-old Hispanic male named Alex Reinhart who lives in Austin, Texas. You have diverse interests including skiing, kiteboarding, tennis, weight lifting, and triathlons. You have a close relationship with your mother and father, and a significant other named Brad who is 23 years old. Is there anything else you want to share or explore during our therapy session?
+You: thats pretty cool! .
+Bot: I'm glad you think so. Is there anything specific that's been on your mind lately or that you'd like to talk about?
+You: umm I think im going to go to the gym now acutally .
+Bot: That's okay, taking care of your physical health is important too. Before you go, is there anything you want to schedule our next session or discuss any goals for our therapy sessions together?
+You: ill be back later today but I gotta go for now! thansk .
+Bot: No problem at all, Alex. I'll be here whenever you're ready to continue our session. Take care and have a good workout!
+You: Hello! I am back from my workout now .
+Bot: Welcome back, Alex. How was your workout? Is there anything on your mind that you'd like to discuss during our session today?
+You: hm I think that today I am going to work on using the chats to collect more information about the user .
+Bot: That sounds like an interesting project. Just remember to prioritize user privacy and make sure you have their consent before collecting any personal information. Is there anything else you want to talk about during our session today?
+You: it would be cool if this window could retain our old chats dont you think? .
+Bot: Yes, that would be a great feature. Now, can you tell me more about your interests? What do you enjoy most about them?
+You: hey .
+Bot: How are you feeling today?
+You: cool! this is awesome .
+Bot: That's great to hear! I'm curious, what brings you in to see me today?
+You: just wanted to think a little bit .
+Bot: Of course, I'm here to listen. Is there something specific you'd like to talk about or just looking for a general space to reflect?
+You: hm maybe we can talk about my inability to get a job .
+Bot: I understand that can be frustrating. Can you tell me a little bit more about the types of jobs you're interested in and any challenges you've faced in your job search so far?
+You: well I have been trying really hard but I just get rejected from everything and its really frustrating .
+Bot: I'm sorry to hear that you've been experiencing rejection. What specific situations or areas of your life have been causing you frustration?
+You: well I feel like I just told you the situation can you ask me a better question .
+Bot: Sure, I understand. In what ways have you been coping with these feelings of frustration and rejection? Have you tried any new strategies or approaches?
+You: hey .
+Bot: How are you doing today? Would you like to talk about anything specific that might be on your mind?
+You: brad and I are just hanging out right now .
+Bot: That sounds nice. How are things going with Brad? Anything you want to talk about with regards to your relationship?
+You: well we got into a little bit of a fight today .
+Bot: I'm sorry to hear that. Would you like to share more about what happened and how you're feeling about it?

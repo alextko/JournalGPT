@@ -1,0 +1,8 @@
+You: good morning .
+Bot: Good morning Brad. How are you feeling today?
+You: im doing well  .
+Bot: That's great to hear, Brad. Can you tell me a little bit about what has been going well for you lately?
+You: well im in Amsterdam working at my jobs Amsterdam office which has been pretty cool .
+Bot: That sounds exciting, Brad. How have you been adjusting to working in a new location? Have you been able to explore the city much outside of work?
+You: yeah! we have been going out to dinner or to get drinks after work which is nice? .
+Bot: That's great to hear, Brad. It's important to take advantage of opportunities to connect with your coworkers outside of work. Have you found any particular hobbies or activities in Amsterdam that you enjoy doing outside of work?

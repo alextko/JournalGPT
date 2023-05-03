@@ -13,6 +13,8 @@ const radioButtons = document.querySelectorAll('input[name="radio2"]');
 let selectedValue;
 
 const openaiApiKey = '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';
+const user = "brad_lev";
+let state_global;
 
 
 function check_state(){
@@ -30,17 +32,21 @@ function check_state(){
 }
 
 function set_state(state) {
+
   if (state === "journal"){
+    state_global = "journal";
     form_input.style.display = 'block';
     save_button.style.display = 'block';
     chat_box.style.display = "none";
 
   } else if (state === "chat"){
+    state_global = "chat";
     form_input.style.display = 'none';
     save_button.style.display = 'none';
     chat_box.style.display = "block";
     save_button.style.display = "none";
     send_button.style.display = "none";
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 
   } 
 }
@@ -75,7 +81,8 @@ $("[name = 'radio2'").click(function(){
 
 $("[name = 'save_button'").click(function(){
   const form_input = document.getElementById("form__input");
-  console.log("we are getting this from the textbox: " + form__input.value)
+  console.log("we are getting this from the textbox: " + form_input.value)
+  save_journal(user, form_input.value)
 });
 
 
@@ -138,14 +145,127 @@ async function sendMessageToChatGPT(message){
 
 };
 
+async function load_data(user){
+  try{
+      fetch(' http://127.0.0.1:5000/api/load_data', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"user": user})
+      })
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+          console.log(data); 
+          message = data.message;
+          text = data.notes;
+          existing_messages = data.existing_messages
+          if (text != ""){
+            set_journal_text(text)
+          }
+          if( existing_messages != ""){
+            set_existing_messages(existing_messages)
+          }
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          console.log("Response status:", error.status);
+      })
+
+  } catch (error) {
+      console.error("Error parsing JSON Response");
+  }
+};
+
+async function save_conversation(user){
+  try{
+      fetch(' http://127.0.0.1:5000/api/save_conversation', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"user": user})
+      })
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+          console.log(data); 
+          message = data.message;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          console.log("Response status:", error.status);
+      })
+
+  } catch (error) {
+      console.error("Error parsing JSON Response");
+  }
+};
+
+async function save_journal(user, text){
+  try{
+      fetch(' http://127.0.0.1:5000/api/save_journal', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"user": user, "text":text})
+      })
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+          console.log(data); 
+          message = data.message;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          console.log("Response status:", error.status);
+      })
+
+  } catch (error) {
+      console.error("Error parsing JSON Response");
+  }
+};
+
+function set_journal_text(text){
+  console.log("setting the text")
+  $('[name="form__input"]').text(text);
+};
+
+function set_existing_messages(existing_messages) {
+  console.log("loading your old messgaes")
+  for (let i = 0; i < existing_messages.length; i++) {
+    if (existing_messages[i][0] === "sent" ){
+      displayMessage("sent", existing_messages[i][1])
+    } else if (existing_messages[i][0] === "recieved" ){
+      displayMessage('received', existing_messages[i][1])
+  }}
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+};
 
 
 
 
 
 
-  // On launch check for the state 
+
+  // On launch check for the state & load users data
   check_state()
+  load_data(user)
+
+  setInterval( async function() { //every 10 seconds save the conversation
+    if (state_global === "chat"){
+      console.log("doing this")
+      save_conversation(user)
+    }
+    
+  }, 60000);
+
 
 });
 
