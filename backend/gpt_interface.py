@@ -4,14 +4,19 @@ import json
 import time
 import datetime
 
-openai.api_key = "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"
 
 context = "\n i want you to act like a therapist, be breif, compassionate, caring, and ask questions \
     about me\n  only ask one question at a time. refrain from mentioning that you are an AI model. Dont say Bot in your response  \n\n"
 
+# load and set the openai API_key
+with open('secrets.json') as file:
+    data = json.load(file)
+    openai.api_key = data["chat_GPT_api_key"]
+
 
 
 def collect_user_info(user):
+    create_prof_if_not_exists("./context_maps/" + user + ".json", user)
     f = open("./context_maps/" + user + ".json")
     user_identity = json.load(f)
 
@@ -20,16 +25,16 @@ def collect_user_info(user):
 
 
 def send_message(user_identity, conversation_history, message):
-    message += " ."  #Adding a period prevents GPT from trying to complete your sentences
+
+    new_message = message + " ."  #Adding a period prevents GPT from trying to complete your sentences
     completion = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=[
-    {"role": "user", "content": str(user_identity) + context + conversation_history + message}
+    {"role": "user", "content": str(user_identity) + context + conversation_history + new_message}
     ]
     )
     
     text_response = completion.choices[0].message.content
-    print(text_response)
 
     valid, revised_output = check_message_for_invalid_response(conversation_history, text_response)
     time.sleep(2)
@@ -80,11 +85,11 @@ def save_conversation(user, conversation_history):
             if existing_text != "" and mod[-1] in conversation_history:
                 text_to_add = conversation_history.split(mod[-1])[1]
                 if text_to_add.strip() != "":
-                    print("conversationhistory: " + conversation_history)
-                    print("\n")
-                    print(" existing text: " + str(mod))
-                    print("why are we adding text right now")
-                    print("this is what we are adding:" + text_to_add)
+                    # print("conversationhistory: " + conversation_history)
+                    # print("\n")
+                    # print(" existing text: " + str(mod))
+                    # print("why are we adding text right now")
+                    # print("this is what we are adding:" + text_to_add)
                     updated_text = existing_text + "\n" + text_to_add
                 else:
                     updated_text = existing_text
@@ -110,41 +115,105 @@ def save_conversation(user, conversation_history):
             f.writelines(lines)
 
 
-def save_journal(user, text):
+def save_journal(user, text, cur_page):
     if text:
-        # get today's date
-        today = datetime.date.today()
-
-        # create a file name using today's date
         create_dir_if_not_exists('history_journal/' + user + "/")
-        file_name = f"history_journal/{user}/{today.strftime('%Y-%m-%d')}.txt"
+        file_name = f"history_journal/{user}/{cur_page}.txt"
 
         if os.path.isfile(file_name):
             with open(file_name, "w") as file:
-                file.write(text + "\n")
+                file.write(text)
         else:
             with open(file_name, "w") as file:
-                file.write(text + "\n")
+                file.write(text)
+
+
+def switch_page(user, cur_page, direction):
+
+    #check if page in direction exists
+    if direction == "r":
+        new_page = cur_page + 1
+    else:
+        new_page = cur_page - 1
+    
+    file_name = f"history_journal/{user}/{new_page}.txt"
+    if os.path.isfile(file_name):
+        with open(file_name, "r") as file:
+            text = file.read()
+            return text, new_page
+    else:
+        return None, cur_page
+    
+def listdir_without_info(path):
+    return [f for f in os.listdir(path) if f != 'info.json']
+
+def new_page(user, cur_page):
+
+    #check if page in direction exists
+    new_page = cur_page + 1
+    
+    file_name = f"history_journal/{user}/{new_page}.txt"
+    if os.path.isfile(file_name):  #if this path already exists we have to bump all the pages down 
+        # Rename all files from index to the end
+        for i in range(len(listdir_without_info(f"history_journal/{user}/")), cur_page, -1):
+            os.rename(f"history_journal/{user}/" + str(i)+'.txt', f"history_journal/{user}/"+ str(i+1)+'.txt')
+        
+        # Create the new file at the specified index
+        with open(f"history_journal/{user}/" + str(new_page)+'.txt', 'w') as f:
+            f.write('')
+        
+        return "", new_page
+
+
+    else:  #otherwise we just create the page and leave it empty 
+        create_file_if_not_exists(file_name)
+        return "", new_page
 
 def create_dir_if_not_exists(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
+def create_file_if_not_exists(file):
+    if os.path.isfile(file):
+        return
+    else:
+        with open(file, "w") as f:
+            f.write(" ")
+            return
+def create_prof_if_not_exists(file, user):
+    if os.path.isfile(file):
+        return
+    else:
+        with open(file, 'w') as f:
+            # Dump the JSON object to the file
+            json.dump({"user": user}, f)
+        
+
+
 
 def check_journal(user):
-    # get today's date
-    today = datetime.date.today()
 
-    # create a file name using today's date
     create_dir_if_not_exists('history_journal/' + user + "/")
-    file_name = f"history_journal/{user}/{today.strftime('%Y-%m-%d')}.txt"
+    file_name = f"history_journal/{user}/info.json"
+    if os.path.isfile(file_name):
+        f = open(file_name)
+        d = json.load(f)
+        last_page = d["last_page"]
+    else:
+        last_page = 1
+        d = {"last_page": last_page}
+        with open(file_name, "w") as outfile:
+            json.dump(d, outfile)
+
+
+    file_name = f"history_journal/{user}/{last_page}.txt"
 
     if os.path.isfile(file_name):
         with open(file_name, "r") as file:
             text = file.read()
-            return text
+            return text, last_page
     else:
-        return ""
+        return "", last_page
     
 def check_existing_messages(user):
     #load 10 most recent messages 
@@ -154,22 +223,22 @@ def check_existing_messages(user):
     create_dir_if_not_exists('history_conversation/' + user + "/")
     file_name = f"history_conversation/{user}/{today.strftime('%Y-%m-%d')}.txt"
 
-
-    with open(file_name, "r") as file:
-        text = file.read()
-    if text != None:
-        text = text.split("\n")[::-1]
-        text_to_show = text[0:10][::-1]
-        parsed_list = []
-        for i in text_to_show:
-            l = i.split(":")
-            if l[0] == "Bot":
-                parsed_list.append(('recieved', l[1]))
-            elif l[0] == "You":
-                parsed_list.append(('sent', l[1]))
-            
-        print(parsed_list)
-        return parsed_list
+    if os.path.isfile(file_name):
+        with open(file_name, "r") as file:
+            text = file.read()
+        if text != None:
+            text = text.split("\n")[::-1]
+            text_to_show = text[0:10][::-1]
+            parsed_list = []
+            for i in text_to_show:
+                l = i.split(":")
+                if l[0] == "Bot":
+                    parsed_list.append(('recieved', l[1]))
+                elif l[0] == "You":
+                    parsed_list.append(('sent', l[1]))
+            return parsed_list
+        else:
+            return ""
     else:
         return ""
     
@@ -182,29 +251,36 @@ def augment_personal_data(user):
     create_dir_if_not_exists('history_conversation/' + user + "/")
     recent_conversations = f"history_conversation/{user}/{today.strftime('%Y-%m-%d')}.txt"
 
-
     create_dir_if_not_exists('history_journal/' + user + "/")
     recent_journal_entries = f"history_journal/{user}/{today.strftime('%Y-%m-%d')}.txt"
 
+    if os.path.isfile(recent_conversations):
+        with open(recent_conversations, "r") as file:
+            recent_conversation_data = file.read()
+    else:
+        recent_conversation_data = ""
 
-    with open(recent_conversations, "r") as file:
-        recent_conversation_data = file.read()
-    
-    with open(recent_journal_entries, "r") as file:
-        recent_journal_entry_data = file.read()
 
-    response = openai.Completion.create(
-    model="text-davinci-003",
-    prompt="\"\"\"\n You are trying to augment this user profile in the form of a json dictionary: " +str(user_info) + "\n add new personal details and upcoming events\n\n You have 2 data sources a journal entry and a conversation in which the individual you are interested in is \"you\" here are the materials: \n"+recent_conversation_data  + "\n" + recent_journal_entry_data +  "\n\"\"\"",
-    temperature=0,
-    max_tokens=100,
-    top_p=1.0,
-    frequency_penalty=0.0,
-    presence_penalty=0.0,
-    stop=["\"\"\""]
-    )
-    
-    print(response)
+    if os.path.isfile(recent_journal_entries):
+        with open(recent_journal_entries, "r") as file:
+            recent_journal_entry_data = file.read()
+    else:
+        recent_journal_entry_data = ""
+
+    if recent_conversation_data != "" and recent_journal_entry_data != "":
+
+        response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt="\"\"\"\n You are trying to augment this user profile in the form of a json dictionary: " +str(user_info) + "\n add new personal details and upcoming events\n\n You have 2 data sources a journal entry and a conversation in which the individual you are interested in is \"you\" here are the materials: \n"+recent_conversation_data  + "\n" + recent_journal_entry_data +  "\n\"\"\"",
+        temperature=0,
+        max_tokens=100,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["\"\"\""]
+        )
+        
+        print(response)
 
 
 user = "alextko"

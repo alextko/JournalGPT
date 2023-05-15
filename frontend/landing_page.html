@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="/landing_page.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/83993620e6.js" crossorigin="anonymous"></script>
   
 </head>
 <div class="container">
@@ -34,8 +36,15 @@
         <div class="form">
             <textarea type="text" id = "form__input" name="form__input" class="form__input" placeholder="Type anything..."></textarea>
             <br><br>
-            <div class="btn btn__primary" name = "save_button" id = "save_button"><p>Save</p></div>
-        </div>
+            <!-- <div class="btn btn__primary" name = "save_button" id = "save_button"><p>Save</p></div> -->
+            <div class="btn-group" id="btn-group">
+              <button class="btn btn__secondary" id="left-button"><i class="fas fa-arrow-left"></i></button>
+              <button class="btn btn__secondary" id="right-button"><i class="fas fa-arrow-right"></i></button>
+              <br><br>
+              <button class="btn btn__primary" name="save_button" id="save_button"><p>Save</p></button>
+              <button class="btn btn__primary" id="new-page-button">New Page</button>
+            </div>
+          </div>
         
 
             <body>
@@ -51,6 +60,22 @@
               </div>
 
               </body>
+
+          <body>
+            <div class="dropdown" id = "dropdown">
+              <img src="/profile_picture/default.jpeg" alt="Profile Picture" class="profile-pic" >
+              <div id="myDropdown" class="dropdown-content">
+                <div class="user-info">You are logged in as <span class="username">alextko</span></div>
+                <hr>
+                <a href="#">Your Profile</a>
+                <a href="landing_page.html?section=journal" id = "journal_link">Journal</a>
+                <a href="landing_page.html?section=chat" id = "chat_link">Chat</a>
+                <a href="#">Explore</a>
+                <hr>
+                <a href="login.html" id = "logout_link">Sign out</a>
+              </div>
+            </div>
+          </body>
       
     </div>
   </div>

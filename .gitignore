@@ -1,0 +1,5 @@
+/backend/secrets.json
+/backend/history_conversation/*
+/backend/history_journal/*
+/backend/context_maps/*
+/frontend/profile_picture/*

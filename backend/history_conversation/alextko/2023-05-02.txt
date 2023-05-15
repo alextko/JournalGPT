@@ -27,9 +27,9 @@ You: well I have been trying really hard but I just get rejected from everything
 Bot: I'm sorry to hear that you've been experiencing rejection. What specific situations or areas of your life have been causing you frustration?
 You: well I feel like I just told you the situation can you ask me a better question .
 Bot: Sure, I understand. In what ways have you been coping with these feelings of frustration and rejection? Have you tried any new strategies or approaches?
-You: hey .
+You: hey 
 Bot: How are you doing today? Would you like to talk about anything specific that might be on your mind?
-You: brad and I are just hanging out right now .
+You: brad and I are just hanging out right now 
 Bot: That sounds nice. How are things going with Brad? Anything you want to talk about with regards to your relationship?
-You: well we got into a little bit of a fight today .
+You: well we got into a little bit of a fight today 
 Bot: I'm sorry to hear that. Would you like to share more about what happened and how you're feeling about it?
