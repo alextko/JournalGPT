@@ -1,17 +1,36 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="landing_page.js"></script>
+    <script src="js/landing_page.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/landing_page.css">
+    <link rel="stylesheet" href="css/landing_page.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/83993620e6.js" crossorigin="anonymous"></script>
-  
 </head>
+<body>
+  <!-- <script> 
+    const frontend_api = "pk_test_YWN0aXZlLW1vbmdvb3NlLTkzLmNsZXJrLmFjY291bnRzLmRldiQ";
+  
+  // Create a script that will be loaded asynchronously in 
+  // your page. 
+  const script = document.createElement('script');
+  script.setAttribute('data-clerk-frontend-api', frontend_api);
+  script.async = true;
+  script.src = `https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js`;
+  script.crossOrigin = "anonymous";
+  // Add a listener so you can initialize ClerkJS
+  // once it's loaded.
+  script.addEventListener('load', async function(){
+    await window.Clerk.load({
+      // Set load options here...
+    });
+  });
+  document.body.appendChild(script);
+</script> -->
 <div class="container">
     <div class="components">
 
@@ -21,7 +40,7 @@
         </div>
         
 
-        <div class="segmented-control">
+        <div class="segmented-control" id = "segmented_control">
     
         <input type="radio" name="radio2" value="journal" id="tab-1" checked/>
         <label for="tab-1" class= "segmented-control__1">
@@ -40,9 +59,11 @@
             <div class="btn-group" id="btn-group">
               <button class="btn btn__secondary" id="left-button"><i class="fas fa-arrow-left"></i></button>
               <button class="btn btn__secondary" id="right-button"><i class="fas fa-arrow-right"></i></button>
+              <button class="btn btn__secondary" id="delete-page-button"><i class="fas fa-sharp fa-xmark"></i></button>
+              <button class="btn btn__secondary" id="new-page-button"><i class="fas fa-plus"></i></button>
               <br><br>
               <button class="btn btn__primary" name="save_button" id="save_button"><p>Save</p></button>
-              <button class="btn btn__primary" id="new-page-button">New Page</button>
+              <!-- <button class="btn btn__primary" id="new-page-button">New Page</button> -->
             </div>
           </div>
         
@@ -54,12 +75,54 @@
                   <div id="chat-form" name="chat-form">
                     <input type="text" id="message-input" placeholder="Type your message here" />
                     <br></br>
-                    <div class="btn btn__primary2" name = "send-button" id="send-button" ><p>Send</p></div>
+                    <!-- <div class="btn btn__primary2" name = "send-button" id="send-button" ><p>Send</p></div> -->
                   </div>
                 </div>
               </div>
 
               </body>
+
+            <body>
+              <div class="profile-container" id ="profile-container">
+                <div>
+                <div class="profile-section">
+                  <div class="profile-picture">
+                    <img src="/profile_picture/default.jpeg" alt="Profile Picture" class="profile-pic-large" >
+                  </div>
+                  <div class="profile-details">
+                    <h2 id = "name"></h2>
+                    <p id = "user_name"></p>
+                    <p id = "email"></p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="tabs-container">
+                    <div class="tabs">
+                      <button class="tab active" id="personal-info-b">Personal Info</button>
+                      <button class="tab" id="journal-uploads-b">Journal Uploads</button>
+                      <button class="tab" id="integrations-b">Integrations</button>
+                    </div>
+                    <div id="personal-info" class="tab-content">
+                      <!-- Personal Info content here -->
+                        <h3>Personal Info</h3>
+                        <p></p>
+                       <textarea type="text" id = "stored_info" class= "stored_info">Personal info content goes here...</textarea>
+                    </div>
+                    <div id="journal-uploads" class="tab-content">
+                      <!-- Journal Uploads content here -->
+                      <h3>Journal Uploads</h3>
+                      <p>Journal uploads content goes here...</p>
+                    </div>
+                    <div id="integrations" class="tab-content">
+                      <!-- Integrations content here -->
+                      <h3>Integrations</h3>
+                      <p>Integrations content goes here...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </body>
 
           <body>
             <div class="dropdown" id = "dropdown">
@@ -67,10 +130,10 @@
               <div id="myDropdown" class="dropdown-content">
                 <div class="user-info">You are logged in as <span class="username">alextko</span></div>
                 <hr>
-                <a href="#">Your Profile</a>
+                <a href="landing_page.html?section=profile" id = "profile_link">Your Profile</a>
                 <a href="landing_page.html?section=journal" id = "journal_link">Journal</a>
                 <a href="landing_page.html?section=chat" id = "chat_link">Chat</a>
-                <a href="#">Explore</a>
+                <a href="landing_page.html?section=explore" id = "explore_link">Explore</a>
                 <hr>
                 <a href="login.html" id = "logout_link">Sign out</a>
               </div>
@@ -79,3 +142,4 @@
       
     </div>
   </div>
+</body>

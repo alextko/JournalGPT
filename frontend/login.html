@@ -3,9 +3,9 @@
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="login.js"></script>
+    <script src="js/login.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/login.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
@@ -13,13 +13,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/83993620e6.js" crossorigin="anonymous"></script>
 
+
   </head>
   <div class="container">
     <div class="components">
         <body>
-            <form id="login-form">
-            <h1>Login</h1>
-            <div>
+            <!-- <form id="login-form"> -->
+            <h1>Welcome to JournalGPT</h1>
+             <div id="user-button"></div> 
+
+            <!-- <div>
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
@@ -29,7 +32,25 @@
             </div>
             <button type="submit">Login</button>
             <div id="error-message"></div>
-            </form>
+            </form> -->
+            
+            <div id="auth-links">
+            <div class="btn-group" id="btn-group">
+            <button class="btn btn__primary" onclick="Clerk.openSignUp()">Sign Up</button>
+            <button class="btn btn__primary" onclick="Clerk.openSignIn()">Sign In</button>
+            </div>
+            </div>
+            <!-- <div class="btn-group" id="btn-group"> -->
+            
+            <!-- <button class="btn btn__primary" >Enter</button> -->
+            <!-- </div> -->
+
+            <div id="no-frontend-api-warning" hidden>
+              <h3>No Frontend API found</h3>
+              <h4>Add it to the top of <code>js/script.js</code>.</h4>
+            </div>
+
+            <script src="js/script.js" async crossorigin="anonymous"></script>
         </body>
     </div>
   </div>

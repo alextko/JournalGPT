@@ -134,13 +134,13 @@ def load_data():
     data = request.json
     user = data['user']
     global user_identity
-    user_identity = gpt_interface.collect_user_info(user)
+    user_identity, first_name, last_name, email, personal_info = gpt_interface.collect_user_info(user)
     exting_notes, curr_page = gpt_interface.check_journal(user)
     existing_messages = gpt_interface.check_existing_messages(user)
 
 
 
-    response = jsonify({'message': "collecting user info for: " + str(user), "notes": exting_notes, "existing_messages": existing_messages, "curr_page": curr_page})
+    response = jsonify({'message': "collecting user info for: " + str(user),"user": user, "first_name": first_name, "last_name": last_name, "email": email, "personal_info": str(personal_info), "notes": exting_notes, "existing_messages": existing_messages, "curr_page": curr_page})
  
     return response
 
@@ -152,12 +152,13 @@ def save_conversation():
     # This function collects the identity for the active user
     data = request.json 
     user = data["user"]
-    gpt_interface.save_conversation(user, conversation_history)
+    update_user = data["update_user"]
+    gpt_interface.save_conversation(user, conversation_history, update_user)
 
-    response = jsonify({'message': "saving conversation: " + str(user)})
+    
+    response = jsonify({'message': "saving conversation: " + str(user), "update-user": update_user})
  
     return response
-
 
 
 @app.route('/api/save_journal', methods=['POST']) 
@@ -172,6 +173,20 @@ def save_journal():
     gpt_interface.save_journal(user, text, cur_page)
 
     response = jsonify({'message': "saving jouranl entry for: " + str(user), "cur_page": cur_page, "text": text})
+ 
+    return response
+
+@app.route('/api/augment_personal_data', methods=['POST']) 
+@cross_origin()
+def augment_personal_data():
+    print("augment_personal_data")
+    # This function collects the identity for the active user
+    data = request.json 
+    user = data["user"]
+    cur_page = data["cur_page"]
+    gpt_interface.augment_personal_data(user, cur_page)
+
+    response = jsonify({'message': "Augmenting personal data for : " + str(user), "cur_page": cur_page})
  
     return response
 
@@ -205,6 +220,22 @@ def new_page():
     response = jsonify({'message': "creating a new page", "text": text, "cur_page": new_page})
  
     return response
+
+
+@app.route('/api/delete_page', methods=['POST']) 
+@cross_origin()
+def delete_page():
+    # This function collects the identity for the active user
+    data = request.json 
+    user = data["user"]
+    cur_page = data["cur_page"]
+    text, new_page = gpt_interface.delete_page(user, cur_page)
+
+    response = jsonify({'message': "creating a new page", "text": text, "cur_page": new_page})
+ 
+    return response
+
+
 
 
 
