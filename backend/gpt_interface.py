@@ -43,6 +43,7 @@ def update_user_info_text(user, text):
 
 def send_message(user_identity, conversation_history, message):
 
+    print("user identity: " + user_identity)
     new_message = message + " ."  #Adding a period prevents GPT from trying to complete your sentences
     completion = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
@@ -53,14 +54,14 @@ def send_message(user_identity, conversation_history, message):
     
     text_response = completion.choices[0].message.content
 
-    valid, revised_output = check_message_for_invalid_response(conversation_history, text_response)
+    valid, revised_output = check_message_for_invalid_response(user_identity, conversation_history, text_response)
     time.sleep(2)
     if valid:
         conversation_history += "You: " + message + "\n" + "Bot: " + revised_output + "\n\n"
         return conversation_history ,revised_output
 
 
-def check_message_for_invalid_response(conversation_history,response):
+def check_message_for_invalid_response(user_identity, conversation_history,response):
     valid = True
 
     if "Bot: " in response:
@@ -69,10 +70,10 @@ def check_message_for_invalid_response(conversation_history,response):
         response = response.split("You: ")[1]
     if "language model" in response:
         valid = False
-        send_message(conversation_history, "ask what is on my mind.")
+        send_message(user_identity, conversation_history, "ask what is on my mind.")
     if "AI model" in response:
         valid = False
-        send_message(conversation_history, "Tell me that you would like to talk about me and ask me to tell you about myslf.")
+        send_message(user_identity, conversation_history, "Tell me that you would like to talk about me and ask me to tell you about myslf.")
     if "journalgpt" in response.lower() or "journal gpt" in response.lower():
         response = "JournalGPT is a place where you can Journal or talk to someone. I as a chatbot therapist am here to \
             listen and support you however I can \n\n JournalGPT allows you to save all these conversations as journal entries as well\

@@ -1,10 +1,4 @@
-// import Clerk from "@clerk/clerk-js";
-// const publishableKey = "pk_test_YWN0aXZlLW1vbmdvb3NlLTkzLmNsZXJrLmFjY291bnRzLmRldiQ"
 
-// const clerk = new Clerk(publishableKey);
-// await clerk.load({
-//   // Set load options here...
-// });
 
 document.addEventListener('DOMContentLoaded', () => {
 const urlParams = new URLSearchParams(window.location.search);
