@@ -1,6 +1,6 @@
 /backend/secrets.json
-/backend/history_conversation/*
-/backend/history_journal/*
-/backend/context_maps/*
-/backend/uploads/*
-/frontend/profile_picture/*
+/backend/history_conversation/**
+/backend/history_journal/**
+/backend/context_maps/**
+/backend/uploads/**
+/frontend/profile_picture/**
